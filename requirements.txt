@@ -1,0 +1,8 @@
+streamlit>=1.40
+pandas
+numpy
+plotly
+scipy
+joblib
+scikit-learn==1.6.1
+snowflake-connector-python[pandas]
