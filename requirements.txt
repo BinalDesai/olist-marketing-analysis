@@ -5,4 +5,6 @@ plotly
 scipy
 joblib
 scikit-learn==1.6.1
-snowflake-connector-python[pandas]
+snowflake-connector-python[pandas]>=3.0.0
+urllib3<2.0.0
+
