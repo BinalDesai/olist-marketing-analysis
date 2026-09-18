@@ -6,6 +6,7 @@ Data comes from Snowflake. The prediction model is loaded from low_review_model.
 
 from pathlib import Path
 
+import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
@@ -19,12 +20,31 @@ from sklearn.preprocessing import StandardScaler
 st.set_page_config(page_title="Olist Marketing Analytics", layout="wide")
 
 APP_DIR = Path(__file__).resolve().parent
-CUTOFF = "2018-09-01"  # orders from Sep 2018 onwards are removed (incomplete tail)
+CUTOFF = "2018-09-01" 
 
 
-# ------------------------------------------------------------
-# Snowflake connection
-# ------------------------------------------------------------
+
+USERNAME = "binal_06"       
+PASSWORD = "olist_2018"     
+
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+if not st.session_state.logged_in:
+    st.title("Project Dashboard Login")
+    st.subheader("Please log in to review the model")
+
+    username_input = st.text_input("Username")
+    password_input = st.text_input("Password", type="password")
+
+    if st.button("Log in"):
+        if username_input == USERNAME and password_input == PASSWORD:
+            st.session_state.logged_in = True
+            st.rerun()
+        else:
+            st.error("Incorrect username or password.")
+
+    st.stop() 
 @st.cache_resource
 def get_connection():
     s = st.secrets["snowflake"]
